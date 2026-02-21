@@ -8,7 +8,7 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb+srv://testeruser:testeruser@cluster0.z5tzaou.mongodb.net/tasks?retryWrites=true&w=majority&appName=Cluster0'),
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/tasks'),
     AuthModule,
     TasksModule,
     UsersModule,

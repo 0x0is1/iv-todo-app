@@ -687,7 +687,7 @@ module.exports = function(api) {
 
 24. **Backend search** — implement search for tasks list. Use `search` query parameter. Return `searched` in response.
 
-25. Mongo url:   url: "mongodb+srv://testeruser:testeruser@cluster0.z5tzaou.mongodb.net/dliver?retryWrites=true&w=majority&appName=Cluster0"
+25. Mongo url:   url: "mongodb+srv://<username>:<password>@cluster0.z5tzaou.mongodb.net/dliver?retryWrites=true&w=majority&appName=Cluster0"
 - change collection name from dliver to tasks
 
 ---
