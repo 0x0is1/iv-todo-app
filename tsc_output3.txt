@@ -1,0 +1,167 @@
+backend/src/auth/auth.controller.ts(10,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/auth/auth.controller.ts(10,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((registerDto: RegisterDto) => Promise<{ token: string; user: { id: any; name: any; email: any; }; }>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((registerDto: RegisterDto) => Promise<{ token: string; user: { id: any; name: any; email: any; }; }>)'.
+backend/src/auth/auth.controller.ts(11,14): error TS1206: Decorators are not valid here.
+backend/src/auth/auth.controller.ts(15,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/auth/auth.controller.ts(15,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((loginDto: LoginDto) => Promise<{ token: string; user: { id: any; name: any; email: any; }; }>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((loginDto: LoginDto) => Promise<{ token: string; user: { id: any; name: any; email: any; }; }>)'.
+backend/src/auth/auth.controller.ts(16,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/auth/auth.controller.ts(16,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((loginDto: LoginDto) => Promise<{ token: string; user: { id: any; name: any; email: any; }; }>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((loginDto: LoginDto) => Promise<{ token: string; user: { id: any; name: any; email: any; }; }>)'.
+backend/src/auth/auth.controller.ts(17,11): error TS1206: Decorators are not valid here.
+backend/src/auth/dto/login.dto.ts(4,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/login.dto.ts(5,5): error TS2564: Property 'email' has no initializer and is not definitely assigned in the constructor.
+backend/src/auth/dto/login.dto.ts(7,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/login.dto.ts(8,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/login.dto.ts(9,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/login.dto.ts(10,5): error TS2564: Property 'password' has no initializer and is not definitely assigned in the constructor.
+backend/src/auth/dto/register.dto.ts(4,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/register.dto.ts(5,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/register.dto.ts(6,5): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+backend/src/auth/dto/register.dto.ts(8,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/register.dto.ts(9,5): error TS2564: Property 'email' has no initializer and is not definitely assigned in the constructor.
+backend/src/auth/dto/register.dto.ts(11,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/register.dto.ts(12,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/auth/dto/register.dto.ts(13,5): error TS2564: Property 'password' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/dto/task.dto.ts(5,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(6,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(7,5): error TS2564: Property 'title' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/dto/task.dto.ts(9,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(10,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(13,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(14,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(15,5): error TS2564: Property 'dateTime' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/dto/task.dto.ts(17,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(18,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(19,5): error TS2564: Property 'deadline' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/dto/task.dto.ts(21,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(22,5): error TS2564: Property 'priority' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/dto/task.dto.ts(24,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(25,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(28,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(29,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(34,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(35,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(38,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(39,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(42,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(43,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(46,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(47,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(50,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(51,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(54,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(55,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(58,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/dto/task.dto.ts(59,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(12,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(13,5): error TS2564: Property 'user' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/task.schema.ts(15,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(16,5): error TS2564: Property 'title' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/task.schema.ts(18,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(19,5): error TS2564: Property 'description' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/task.schema.ts(21,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(22,5): error TS2564: Property 'dateTime' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/task.schema.ts(24,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(25,5): error TS2564: Property 'deadline' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/task.schema.ts(27,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(28,5): error TS2564: Property 'priority' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/task.schema.ts(30,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(31,5): error TS2564: Property 'category' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/task.schema.ts(33,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/tasks/task.schema.ts(34,5): error TS2564: Property 'status' has no initializer and is not definitely assigned in the constructor.
+backend/src/tasks/tasks.controller.ts(12,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/tasks/tasks.controller.ts(12,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, createTaskDto: CreateTaskDto) => Promise<Task>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, createTaskDto: CreateTaskDto) => Promise<Task>)'.
+backend/src/tasks/tasks.controller.ts(13,12): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(13,34): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(17,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/tasks/tasks.controller.ts(17,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any) => Promise<Task[]>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any) => Promise<Task[]>)'.
+backend/src/tasks/tasks.controller.ts(18,13): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(22,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/tasks/tasks.controller.ts(22,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, id: string, updateTaskDto: UpdateTaskDto) => Promise<Task>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, id: string, updateTaskDto: UpdateTaskDto) => Promise<Task>)'.
+backend/src/tasks/tasks.controller.ts(24,9): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(25,9): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(26,9): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(31,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/tasks/tasks.controller.ts(31,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, id: string) => Promise<void>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, id: string) => Promise<void>)'.
+backend/src/tasks/tasks.controller.ts(32,12): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(32,34): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(36,5): error TS1241: Unable to resolve signature of method decorator when called as an expression.
+  The runtime will invoke the decorator with 2 arguments, but the decorator expects 3.
+backend/src/tasks/tasks.controller.ts(36,6): error TS1270: Decorator function return type 'void | TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, id: string) => Promise<Task>)'.
+  Type 'TypedPropertyDescriptor<unknown>' is not assignable to type 'void | ((user: any, id: string) => Promise<Task>)'.
+backend/src/tasks/tasks.controller.ts(37,20): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.controller.ts(37,42): error TS1206: Decorators are not valid here.
+backend/src/tasks/tasks.service.ts(9,17): error TS1206: Decorators are not valid here.
+backend/src/users/user.schema.ts(8,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/users/user.schema.ts(9,5): error TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor.
+backend/src/users/user.schema.ts(11,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/users/user.schema.ts(12,5): error TS2564: Property 'email' has no initializer and is not definitely assigned in the constructor.
+backend/src/users/user.schema.ts(14,6): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+backend/src/users/user.schema.ts(15,5): error TS2564: Property 'passwordHash' has no initializer and is not definitely assigned in the constructor.
+backend/src/users/users.service.ts(8,17): error TS1206: Decorators are not valid here.
+backend/test/app.e2e-spec.ts(7,1): error TS2582: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+backend/test/app.e2e-spec.ts(10,3): error TS2304: Cannot find name 'beforeEach'.
+backend/test/app.e2e-spec.ts(19,3): error TS2582: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha`.
+src/components/task/TaskCard.tsx(27,13): error TS2339: Property 'fetchTasks' does not exist on type 'TaskState'.
+src/screens/tasks/AddTaskScreen.tsx(12,13): error TS2339: Property 'fetchTasks' does not exist on type 'TaskState'.
+src/screens/tasks/EditTaskScreen.tsx(13,13): error TS2339: Property 'fetchTasks' does not exist on type 'TaskState'.
+src/screens/tasks/TaskDetailScreen.tsx(18,20): error TS2339: Property 'fetchTasks' does not exist on type 'TaskState'.

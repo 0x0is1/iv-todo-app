@@ -1,0 +1,74 @@
+import React from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { AppText } from '../common/AppText';
+import { useTaskStore } from '../../store/task.store';
+import { colors } from '../../constants/colors';
+
+export const TaskFilterBar = () => {
+    const { activeFilter, setFilter, tasks } = useTaskStore();
+
+    const handleFilterPress = (type: 'status' | 'priority' | 'category', value: string) => {
+        setFilter({ [type]: value });
+    };
+
+    const Chip = ({ label, isActive, onPress }: { label: string, isActive: boolean, onPress: () => void }) => (
+        <TouchableOpacity
+            style={[styles.chip, isActive && styles.chipActive]}
+            onPress={onPress}
+            activeOpacity={0.7}
+        >
+            <AppText style={[styles.chipText, isActive && styles.chipTextActive]}>
+                {label}
+            </AppText>
+        </TouchableOpacity>
+    );
+
+    return (
+        <View style={styles.container}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+                <Chip label="All" isActive={activeFilter.status === 'all' && activeFilter.priority === 'all'} onPress={() => setFilter({ status: 'all', priority: 'all', category: 'all' })} />
+                <View style={styles.divider} />
+                <Chip label="Pending" isActive={activeFilter.status === 'pending'} onPress={() => handleFilterPress('status', 'pending')} />
+                <Chip label="Completed" isActive={activeFilter.status === 'completed'} onPress={() => handleFilterPress('status', 'completed')} />
+                <View style={styles.divider} />
+                <Chip label="High" isActive={activeFilter.priority === 'high'} onPress={() => handleFilterPress('priority', 'high')} />
+                <Chip label="Medium" isActive={activeFilter.priority === 'medium'} onPress={() => handleFilterPress('priority', 'medium')} />
+                <Chip label="Low" isActive={activeFilter.priority === 'low'} onPress={() => handleFilterPress('priority', 'low')} />
+            </ScrollView>
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        height: 50,
+        marginBottom: 16,
+    },
+    scrollContent: {
+        paddingHorizontal: 16,
+        alignItems: 'center',
+    },
+    chip: {
+        backgroundColor: colors.bgTertiary,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 20,
+        marginRight: 8,
+    },
+    chipActive: {
+        backgroundColor: colors.accentPrimary,
+    },
+    chipText: {
+        color: colors.textMuted,
+        fontWeight: '500',
+    },
+    chipTextActive: {
+        color: 'white',
+    },
+    divider: {
+        width: 1,
+        height: 20,
+        backgroundColor: colors.border,
+        marginRight: 8,
+    }
+});
