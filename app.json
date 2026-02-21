@@ -4,6 +4,7 @@
     "slug": "doit-todo-app",
     "owner": "0x0is1",
     "version": "1.0.0",
+    "icon": "./assets/icon.png",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "runtimeVersion": "1.0.0",
@@ -15,6 +16,8 @@
     },
     "backgroundColor": "#0A0A0F",
     "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
       "backgroundColor": "#0A0A0F"
     },
     "android": {
