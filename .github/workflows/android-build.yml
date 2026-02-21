@@ -1,0 +1,64 @@
+name: Android APK Build
+
+on:
+  push:
+    branches:
+      - main
+      - preview
+      - develop
+
+jobs:
+  build-android:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Expo & EAS
+        uses: expo/expo-github-action@v8
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          eas-version: latest
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build APK (Local EAS)
+        env:
+          _JAVA_OPTIONS: "-Xmx6g -XX:MaxMetaspaceSize=3g"
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=3g -Dkotlin.daemon.jvm.options=-Xmx4g"
+        run: |
+          CI=1 eas build \
+            -p android \
+            --profile preview \
+            --local
+
+      - name: Locate APK
+        id: find_apk
+        run: |
+          APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
+
+          if [ -z "$APK_PATH" ]; then
+            echo "No APK found!"
+            exit 1
+          fi
+
+          echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: doit-preview-apk
+          path: ${{ steps.find_apk.outputs.apk_path }}
+
+      - name: Summary
+        run: |
+          echo "## ✅ APK Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "Download from Artifacts section above." >> $GITHUB_STEP_SUMMARY

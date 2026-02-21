@@ -2,9 +2,17 @@
   "expo": {
     "name": "DOIT",
     "slug": "doit-todo-app",
+    "owner": "0x0is1",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 3000,
+      "url": "https://u.expo.dev/90542fa4-72e1-44aa-a913-a20af7356c89"
+    },
     "backgroundColor": "#0A0A0F",
     "splash": {
       "backgroundColor": "#0A0A0F"
@@ -14,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0A0A0F"
       },
-      "package": "com.doit.todoapp",
+      "package": "com.nys.todo",
       "permissions": [
         "NOTIFICATIONS",
         "RECEIVE_BOOT_COMPLETED",
@@ -23,7 +31,28 @@
     },
     "plugins": [
       "expo-font",
-      "expo-notifications"
-    ]
+      "expo-notifications",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0",
+            "newArchEnabled": true,
+            "ndkVersion": "26.1.10909125",
+            "lint": {
+              "abortOnError": false,
+              "checkReleaseBuilds": false
+            }
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "90542fa4-72e1-44aa-a913-a20af7356c89"
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, { useRef } from 'react';
+import { View, StyleSheet, TouchableOpacity, Alert, PanResponder, Animated as RNAnimated, Dimensions } from 'react-native';
 import Animated, { FadeInDown, FadeOutLeft } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -27,6 +27,26 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, index }) => {
     const { fetchTasks } = useTaskStore();
     const { showToast } = useUIStore();
     const isCompleted = task.status === 'completed';
+
+    const pan = useRef(new RNAnimated.ValueXY()).current;
+
+    const panResponder = useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: (_, gestureState) => {
+                return Math.abs(gestureState.dx) > 20 && Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
+            },
+            onPanResponderMove: RNAnimated.event([null, { dx: pan.x }], { useNativeDriver: false }),
+            onPanResponderRelease: (_, gestureState) => {
+                if (gestureState.dx > Dimensions.get('window').width * 0.4) {
+                    handleToggle();
+                }
+                RNAnimated.spring(pan, {
+                    toValue: { x: 0, y: 0 },
+                    useNativeDriver: false
+                }).start();
+            }
+        })
+    ).current;
 
     const getBorderColor = () => {
         switch (task.priority) {
@@ -82,52 +102,54 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, index }) => {
             entering={FadeInDown.delay(Math.min(index * 50, 300)).springify()}
             exiting={FadeOutLeft}
         >
-            <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => navigation.navigate('TaskDetail', { taskId: task._id })}
-                onLongPress={handleLongPress}
-            >
-                <AppCard style={[
-                    styles.card,
-                    { borderLeftWidth: 3, borderLeftColor: getBorderColor() },
-                    isCompleted && styles.completedCard
-                ]}>
-                    <View style={styles.leftContent}>
-                        <TaskStatusToggle status={task.status} onToggle={handleToggle} />
-                    </View>
+            <RNAnimated.View style={{ transform: [{ translateX: pan.x }] }} {...panResponder.panHandlers}>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate('TaskDetail', { taskId: task._id })}
+                    onLongPress={handleLongPress}
+                >
+                    <AppCard style={[
+                        styles.card,
+                        { borderLeftWidth: 3, borderLeftColor: getBorderColor() },
+                        isCompleted && styles.completedCard
+                    ]}>
+                        <View style={styles.leftContent}>
+                            <TaskStatusToggle status={task.status} onToggle={handleToggle} />
+                        </View>
 
-                    <View style={styles.centerContent}>
-                        <AppText
-                            style={[
-                                styles.title,
-                                isCompleted && styles.completedText
-                            ]}
-                            numberOfLines={1}
-                        >
-                            {task.title}
-                        </AppText>
-                        {task.description && (
+                        <View style={styles.centerContent}>
                             <AppText
-                                variant="small"
-                                style={[styles.description, isCompleted && styles.completedText]}
+                                style={[
+                                    styles.title,
+                                    isCompleted && styles.completedText
+                                ]}
                                 numberOfLines={1}
                             >
-                                {task.description}
+                                {task.title}
                             </AppText>
-                        )}
-                        <AppText
-                            variant="small"
-                            style={{ color: getDeadlineColor(), marginTop: 4, fontWeight: '500' }}
-                        >
-                            Due {dateHelpers.formatForDisplay(task.deadline)}
-                        </AppText>
-                    </View>
+                            {task.description && (
+                                <AppText
+                                    variant="small"
+                                    style={[styles.description, isCompleted && styles.completedText]}
+                                    numberOfLines={1}
+                                >
+                                    {task.description}
+                                </AppText>
+                            )}
+                            <AppText
+                                variant="small"
+                                style={{ color: getDeadlineColor(), marginTop: 4, fontWeight: '500' }}
+                            >
+                                Due {dateHelpers.formatForDisplay(task.deadline)}
+                            </AppText>
+                        </View>
 
-                    <View style={styles.rightContent}>
-                        <TaskBadgePriority priority={task.priority} />
-                    </View>
-                </AppCard>
-            </TouchableOpacity>
+                        <View style={styles.rightContent}>
+                            <TaskBadgePriority priority={task.priority} />
+                        </View>
+                    </AppCard>
+                </TouchableOpacity>
+            </RNAnimated.View>
         </Animated.View>
     );
 };

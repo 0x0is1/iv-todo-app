@@ -16,8 +16,50 @@ export class TasksService {
         return createdTask.save();
     }
 
-    async findAllForUser(userId: string): Promise<Task[]> {
-        return this.taskModel.find({ user: userId as any }).exec();
+    async findAllForUser(userId: string, query?: any): Promise<any> {
+        const { page = 1, limit = 10, sort, filter, search } = query || {};
+        const skip = (Math.max(1, Number(page)) - 1) * Number(limit);
+        const queryObj: any = { user: userId as any };
+
+        if (filter) {
+            const [key, value] = typeof filter === 'string' ? filter.split(':') : [];
+            if (key && value) {
+                queryObj[key] = value;
+            }
+        }
+
+        if (search) {
+            queryObj.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        let sortObj: any = { createdAt: -1 };
+        if (sort) {
+            const [key, order] = typeof sort === 'string' ? sort.split(':') : [];
+            if (key) {
+                sortObj[key] = order === 'asc' ? 1 : -1;
+            }
+        }
+
+        const tasks = await this.taskModel.find(queryObj)
+            .sort(sortObj)
+            .skip(skip)
+            .limit(Number(limit))
+            .exec();
+
+        const total = await this.taskModel.countDocuments(queryObj);
+
+        return {
+            tasks,
+            total,
+            page: Number(page),
+            pages: Math.ceil(total / Number(limit)),
+            sorted: !!sort,
+            filtered: !!filter,
+            searched: !!search
+        };
     }
 
     async update(userId: string, taskId: string, updateTaskDto: UpdateTaskDto): Promise<Task> {

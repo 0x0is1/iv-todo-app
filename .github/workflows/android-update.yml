@@ -1,0 +1,41 @@
+name: Android OTA Update
+
+on:
+  push:
+    branches:
+      - main
+      - preview
+      - develop
+    paths:
+      - "src/**"
+      - "assets/**"
+
+jobs:
+  publish-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Expo & EAS
+        uses: expo/expo-github-action@v8
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          eas-version: latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish OTA to Preview Branch
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=%s)
+
+          echo "Publishing OTA to preview branch"
+          echo "Message: $COMMIT_MESSAGE"
+
+          eas update \
+            --platform android \
+            --branch preview \
+            --non-interactive \
+            --message "$COMMIT_MESSAGE"
