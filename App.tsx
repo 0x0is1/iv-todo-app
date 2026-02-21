@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFonts } from 'expo-font';
+import { Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter';
+import { SpaceGrotesk_400Regular, SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -13,8 +15,10 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Inter: require('./src/assets/fonts/Inter-Regular.ttf'),
-    SpaceGrotesk: require('./src/assets/fonts/SpaceGrotesk-Regular.ttf'),
+    Inter: Inter_400Regular,
+    InterBold: Inter_700Bold,
+    SpaceGrotesk: SpaceGrotesk_400Regular,
+    SpaceGroteskBold: SpaceGrotesk_700Bold,
   });
 
   useEffect(() => {
