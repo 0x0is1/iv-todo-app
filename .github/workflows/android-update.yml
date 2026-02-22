@@ -7,12 +7,15 @@ on:
       - preview
       - develop
     paths:
-      - "src/**"
-      - "assets/**"
+      - "frontend/src/**"
+      - "frontend/assets/**"
 
 jobs:
   publish-update:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
 
     steps:
       - name: Checkout repository

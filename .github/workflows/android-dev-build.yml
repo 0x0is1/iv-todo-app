@@ -1,4 +1,4 @@
-name: Android APK Build
+name: Android Dev Build
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
       - frontend/package-lock.json
 
 jobs:
-  build-android:
+  build-android-dev:
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build APK (Local EAS)
+      - name: Build Dev APK (Local EAS)
         env:
           _JAVA_OPTIONS: "-Xmx6g -XX:MaxMetaspaceSize=3g"
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=3g -Dkotlin.daemon.jvm.options=-Xmx4g"
@@ -47,7 +47,7 @@ jobs:
         run: |
           CI=1 eas build \
             -p android \
-            --profile preview \
+            --profile development \
             --local
 
       - name: Locate APK
@@ -65,10 +65,10 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: doit-preview-apk
+          name: doit-dev-apk
           path: frontend/${{ steps.find_apk.outputs.apk_path }}
 
       - name: Summary
         run: |
-          echo "## APK Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "## Dev APK Build Complete" >> $GITHUB_STEP_SUMMARY
           echo "Download from Artifacts section above." >> $GITHUB_STEP_SUMMARY
