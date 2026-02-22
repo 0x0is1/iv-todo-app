@@ -123,7 +123,7 @@ export const notificationService = {
 
             const identifier = await Notifications.scheduleNotificationAsync({
                 content: {
-                    title: '⏰ Task Reminder',
+                    title: 'Task Reminder',
                     body: `"${title}" is due soon!`,
                     sound: true,
                 },
