@@ -29,12 +29,20 @@
       "permissions": [
         "NOTIFICATIONS",
         "RECEIVE_BOOT_COMPLETED",
-        "VIBRATE"
+        "VIBRATE",
+        "SCHEDULE_EXACT_ALARM",
+        "USE_EXACT_ALARM"
       ]
     },
     "plugins": [
       "expo-font",
-      "expo-notifications",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#00D4FF"
+        }
+      ],
       [
         "expo-build-properties",
         {

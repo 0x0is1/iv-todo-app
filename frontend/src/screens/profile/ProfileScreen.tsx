@@ -7,6 +7,7 @@ import { AppButton } from '@/components/common/AppButton';
 import { AppCard } from '@/components/common/AppCard';
 import { useTheme, useStyles } from '@/theme/useTheme';
 import { ThemeColors } from '@/constants/colors';
+import * as Notifications from 'expo-notifications';
 import { useAuthStore } from '@/store/auth.store';
 import { useTaskStore } from '@/store/task.store';
 
@@ -36,6 +37,26 @@ const ProfileScreen = () => {
                 }
             ]
         );
+    };
+
+    const handleTestNotification = async () => {
+        try {
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: "Test Notification! 🚀",
+                    body: "If you see this, notifications are working.",
+                    sound: true,
+                },
+                trigger: {
+                    type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+                    seconds: 5,
+                    repeats: false
+                }
+            });
+            Alert.alert("Scheduled", "Notification will trigger in 5 seconds. Put the app in background to test!");
+        } catch (error: any) {
+            Alert.alert("Error", error.message);
+        }
     };
 
     if (!user) return null;
@@ -101,6 +122,12 @@ const ProfileScreen = () => {
                     onPress={handleLogout}
                     style={styles.logoutButton}
                 />
+            </View>
+            <View
+                style={styles.fabContainer}
+                onTouchEnd={handleTestNotification}
+            >
+                <Ionicons name="notifications" size={24} color="#FFF" />
             </View>
         </ScreenWrapper>
     );
@@ -181,6 +208,23 @@ const createStyles = (colors: ThemeColors) => StyleSheet.create({
     },
     logoutButton: {
         borderColor: colors.danger,
+    },
+    fabContainer: {
+        position: 'absolute',
+        bottom: 30,
+        right: 20,
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: colors.accentPrimary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: colors.accentPrimary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 5,
+        zIndex: 1000,
     }
 });
 

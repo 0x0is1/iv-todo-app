@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications';
-import { Platform } from 'react-native';
+import { Platform, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Notifications.setNotificationHandler({
@@ -8,7 +8,7 @@ Notifications.setNotificationHandler({
         shouldPlaySound: true,
         shouldSetBadge: false,
         shouldShowBanner: true,
-        shouldShowList: true
+        shouldShowList: true,
     }),
 });
 
@@ -30,7 +30,12 @@ export const notificationService = {
             finalStatus = status;
         }
 
-        return finalStatus === 'granted';
+        if (finalStatus !== 'granted') {
+            Alert.alert('Permission Denied', 'Failed to get push token for push notification! Please enable them in settings.');
+            return false;
+        }
+
+        return true;
     },
 
     async scheduleTaskReminder(taskId: string, title: string, deadline: string) {
