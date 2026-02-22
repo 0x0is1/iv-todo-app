@@ -1,10 +1,9 @@
 import * as Notifications from 'expo-notifications';
-import { Platform, Alert } from 'react-native';
+import { Platform, Alert, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
-        shouldShowAlert: true,
         shouldPlaySound: true,
         shouldSetBadge: false,
         shouldShowBanner: true,
@@ -15,11 +14,25 @@ Notifications.setNotificationHandler({
 export const notificationService = {
     async setup() {
         if (Platform.OS === 'android') {
+            // Default channel for general notifications
             await Notifications.setNotificationChannelAsync('default', {
-                name: 'default',
+                name: 'General',
                 importance: Notifications.AndroidImportance.MAX,
                 vibrationPattern: [0, 250, 250, 250],
                 lightColor: '#00D4FF',
+            });
+
+            // Alarm channel for deadline reminders — plays on ALARM volume
+            await Notifications.setNotificationChannelAsync('task_alarms_v1', {
+                name: 'Task Alarms',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 500, 200, 500, 200, 500],
+                lightColor: '#FF4560',
+                sound: 'default',
+                audioAttributes: {
+                    usage: Notifications.AndroidAudioUsage.ALARM,
+                    contentType: Notifications.AndroidAudioContentType.SONIFICATION,
+                },
             });
         }
 
@@ -31,54 +44,102 @@ export const notificationService = {
         }
 
         if (finalStatus !== 'granted') {
-            Alert.alert('Permission Denied', 'Failed to get push token for push notification! Please enable them in settings.');
+            Alert.alert('Permission Denied', 'Notifications are disabled. Please enable them in your device settings.');
             return false;
         }
 
         return true;
     },
 
+    async requestBatteryOptimizationExemption() {
+        if (Platform.OS !== 'android') return;
+
+        // Only prompt once
+        const alreadyAsked = await AsyncStorage.getItem('battery_opt_asked');
+        if (alreadyAsked) return;
+
+        await AsyncStorage.setItem('battery_opt_asked', 'true');
+
+        Alert.alert(
+            'Keep Alarms Reliable',
+            'To ensure task reminders work even when the app is closed, please disable battery optimization for DOIT.\n\nTap "Open Settings" and select "Unrestricted" or "Don\'t optimize".',
+            [
+                { text: 'Later', style: 'cancel' },
+                {
+                    text: 'Open Settings',
+                    onPress: () => {
+                        // Opens the battery optimization settings for this app
+                        Linking.openSettings();
+                    },
+                },
+            ]
+        );
+    },
+
     async scheduleTaskReminder(taskId: string, title: string, deadline: string) {
+        // --- 1. Validate the deadline ---
+        if (!deadline) {
+            console.warn('scheduleTaskReminder: no deadline provided, skipping.');
+            return;
+        }
+
         const deadlineDate = new Date(deadline);
+        if (isNaN(deadlineDate.getTime())) {
+            console.warn('scheduleTaskReminder: invalid deadline date string:', deadline);
+            return;
+        }
+
         const now = new Date();
 
-        // If deadline has passed, do not schedule
+        // --- 3. Schedule the actual deadline reminder ---
         if (deadlineDate.getTime() <= now.getTime()) {
             return;
         }
 
-        let triggerDate = new Date(deadlineDate.getTime() - 60 * 60 * 1000); // 1 hour before
+        // Try these trigger windows in order: 1 hour before, 10 minutes before, 1 minute before
+        const triggerWindows = [
+            { label: '1 hour', ms: 60 * 60 * 1000 },
+            { label: '10 minutes', ms: 10 * 60 * 1000 },
+            { label: '1 minute', ms: 1 * 60 * 1000 },
+        ];
 
-        // If 1 hour before is in the past, schedule 5 minutes before instead
-        if (triggerDate.getTime() <= now.getTime()) {
-            triggerDate = new Date(deadlineDate.getTime() - 5 * 60 * 1000); // 5 minutes before
-
-            // If even 5 minutes before is in the past, don't schedule
-            if (triggerDate.getTime() <= now.getTime()) {
-                return;
+        let triggerMs: number | null = null;
+        for (const window of triggerWindows) {
+            const candidateMs = deadlineDate.getTime() - window.ms - now.getTime();
+            if (candidateMs > 0) {
+                triggerMs = candidateMs;
+                break;
             }
         }
 
+        if (!triggerMs || triggerMs < 1000) {
+            return;
+        }
+
+        const triggerSeconds = Math.max(Math.floor(triggerMs / 1000), 1);
+
         try {
-            // First cancel any existing reminder for this task
-            await this.cancelTaskReminder(taskId);
+            await notificationService.cancelTaskReminder(taskId);
 
             const identifier = await Notifications.scheduleNotificationAsync({
                 content: {
-                    title: 'Task Reminder',
+                    title: '⏰ Task Reminder',
                     body: `"${title}" is due soon!`,
                     sound: true,
                 },
                 trigger: {
-                    type: Notifications.SchedulableTriggerInputTypes.DATE,
-                    date: triggerDate
+                    type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+                    seconds: triggerSeconds,
+                    repeats: false,
+                    channelId: 'task_alarms_v1',
                 },
             });
 
-            // Save the identifier keyed by taskId so we can cancel it later
             await AsyncStorage.setItem(`notification_${taskId}`, identifier);
-        } catch (e) {
-            console.warn("Failed to schedule notification:", e);
+        } catch (e: any) {
+            console.log(`[NOTIF] ❌ ERROR at scheduling: ${e.message}`);
+            console.log(`[NOTIF] ❌ Full error:`, JSON.stringify(e));
+            Alert.alert('Notification Error', `Could not schedule reminder: ${e.message}`);
         }
     },
 
@@ -90,7 +151,8 @@ export const notificationService = {
                 await AsyncStorage.removeItem(`notification_${taskId}`);
             }
         } catch (e) {
-            console.warn("Failed to cancel notification:", e);
+            console.warn('Failed to cancel notification:', e);
         }
     }
 };
+

@@ -39,8 +39,12 @@ export default function App() {
     if (fontsLoaded) {
       // Hide splash after fonts load
       SplashScreen.hideAsync();
-      // Setup notifications
-      notificationService.setup();
+      // Setup notifications & prompt battery whitelist
+      notificationService.setup().then((granted) => {
+        if (granted) {
+          notificationService.requestBatteryOptimizationExemption();
+        }
+      });
 
       if (!__DEV__) {
         onFetchUpdateAsync();
