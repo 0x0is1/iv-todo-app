@@ -1,6 +1,8 @@
 import React from 'react';
+import { View, StyleSheet, Platform, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { AppTabParamList, HomeStackParamList } from '../types/navigation.types';
 import { colors } from '../constants/colors';
@@ -19,10 +21,7 @@ const HomeStackNavigator = () => {
     return (
         <HomeStack.Navigator
             screenOptions={{
-                headerStyle: { backgroundColor: colors.bgSecondary },
-                headerTintColor: colors.textPrimary,
-                headerTitleStyle: { fontFamily: 'SpaceGrotesk', fontSize: 18 },
-                headerShadowVisible: false,
+                headerShown: false,
             }}
         >
             <HomeStack.Screen name="Home" component={HomeScreen} options={{ title: 'DOIT' }} />
@@ -38,9 +37,11 @@ export const AppNavigator = () => {
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
-                tabBarStyle: {
-                    backgroundColor: colors.bgSecondary,
-                    borderTopColor: colors.border,
+                tabBarStyle: styles.tabBarStyle,
+                tabBarIconStyle: {
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flex: 1
                 },
                 tabBarActiveTintColor: colors.accentPrimary,
                 tabBarInactiveTintColor: colors.textMuted,
@@ -50,11 +51,23 @@ export const AppNavigator = () => {
             <Tab.Screen
                 name="HomeTab"
                 component={HomeStackNavigator}
-                options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" size={size} color={color} />
+                options={({ route }) => ({
+                    tabBarIcon: ({ color, focused }) => (
+                        <View style={[
+                            styles.iconContainer,
+                            focused && { backgroundColor: colors.accentPrimary + '20' }
+                        ]}>
+                            <Ionicons name="home" size={24} color={color} />
+                        </View>
                     ),
-                }}
+                    tabBarStyle: ((route) => {
+                        const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+                        if (routeName === 'AddTask' || routeName === 'EditTask') {
+                            return { display: 'none' };
+                        }
+                        return styles.tabBarStyle;
+                    })(route),
+                })}
             />
             <Tab.Screen
                 name="AddTaskDummy"
@@ -67,8 +80,10 @@ export const AppNavigator = () => {
                     },
                 })}
                 options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="add-circle" size={32} color={colors.accentPrimary} />
+                    tabBarIcon: () => (
+                        <View style={styles.iconContainer}>
+                            <Ionicons name="add-circle" size={32} color={colors.success} />
+                        </View>
                     ),
                 }}
             />
@@ -76,11 +91,43 @@ export const AppNavigator = () => {
                 name="Profile"
                 component={ProfileScreen}
                 options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person" size={size} color={color} />
+                    tabBarIcon: ({ color, focused }) => (
+                        <View style={[
+                            styles.iconContainer,
+                            focused && { backgroundColor: colors.accentPrimary + '20' }
+                        ]}>
+                            <Ionicons name="person" size={24} color={color} />
+                        </View>
                     ),
                 }}
             />
         </Tab.Navigator>
     );
 };
+
+const styles = StyleSheet.create({
+    iconContainer: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    tabBarStyle: {
+        position: 'absolute',
+        bottom: 25,
+        left: 20,
+        right: 20,
+        backgroundColor: colors.bgSecondary,
+        borderRadius: 20,
+        height: 64,
+        borderTopWidth: 0,
+        paddingBottom: 0,
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        marginHorizontal: 16,
+    },
+});

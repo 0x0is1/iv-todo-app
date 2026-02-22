@@ -205,8 +205,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ initialValues, onSubmit, isL
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        paddingBottom: 40,
+        paddingHorizontal: 16,
     },
     label: {
         color: colors.textSecondary,

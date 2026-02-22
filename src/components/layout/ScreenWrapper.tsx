@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ViewProps } from 'react-native';
+import { View, StyleSheet, ViewProps, Platform, StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../../constants/colors';
 
@@ -23,7 +23,7 @@ export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
             style={[
                 styles.container,
                 {
-                    paddingTop: withTopInset ? insets.top : 0,
+                    paddingTop: withTopInset ? Math.max(insets.top, Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0) : 0,
                     paddingBottom: withBottomInset ? insets.bottom : 0,
                 },
                 style,

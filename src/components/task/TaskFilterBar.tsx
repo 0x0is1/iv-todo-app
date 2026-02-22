@@ -41,8 +41,7 @@ export const TaskFilterBar = () => {
 
 const styles = StyleSheet.create({
     container: {
-        height: 50,
-        marginBottom: 16,
+        height: 42,
     },
     scrollContent: {
         paddingHorizontal: 16,
@@ -51,8 +50,10 @@ const styles = StyleSheet.create({
     chip: {
         backgroundColor: colors.bgTertiary,
         paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 20,
+        height: 42,
+        borderRadius: 21,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginRight: 8,
     },
     chipActive: {

@@ -14,6 +14,7 @@ import { dateHelpers } from '../../utils/dateHelpers';
 import { useTaskStore } from '../../store/task.store';
 import { tasksApi } from '../../services/api/tasks.api';
 import { useUIStore } from '../../store/ui.store';
+import { notificationService } from '../../services/notification.service';
 
 interface TaskCardProps {
     task: Task;
@@ -66,7 +67,12 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, index }) => {
 
     const handleToggle = async () => {
         try {
-            await tasksApi.toggleComplete(task._id);
+            const updatedTask = await tasksApi.toggleComplete(task._id);
+            if (updatedTask.status === 'completed') {
+                await notificationService.cancelTaskReminder(task._id);
+            } else {
+                await notificationService.scheduleTaskReminder(updatedTask._id, updatedTask.title, updatedTask.deadline);
+            }
             await fetchTasks(); // Sync
             showToast('Task updated', 'success');
         } catch (error) {
@@ -86,6 +92,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, index }) => {
                     onPress: async () => {
                         try {
                             await tasksApi.deleteTask(task._id);
+                            await notificationService.cancelTaskReminder(task._id);
                             await fetchTasks();
                             showToast('Task deleted', 'info');
                         } catch (error) {

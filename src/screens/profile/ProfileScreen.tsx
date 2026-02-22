@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     },
     footer: {
         marginTop: 'auto',
-        marginBottom: 40,
+        marginBottom: 120,
     },
     logoutButton: {
         borderColor: colors.danger,

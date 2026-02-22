@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ScreenWrapper } from '../../components/layout/ScreenWrapper';
 import { AppText } from '../../components/common/AppText';
@@ -8,26 +8,12 @@ import { TaskFilterBar } from '../../components/task/TaskFilterBar';
 import { TaskList } from '../../components/task/TaskList';
 import { colors } from '../../constants/colors';
 import { useTaskStore } from '../../store/task.store';
+import { CustomHeader } from '../../components/layout/CustomHeader';
 
 const HomeScreen = ({ navigation }: any) => {
     const { activeSortMode, setSortMode } = useTaskStore();
     const [isSortModalVisible, setIsSortModalVisible] = useState(false);
 
-    // Custom Header replacing native stack header
-    React.useLayoutEffect(() => {
-        navigation.setOptions({
-            headerTitle: () => (
-                <AppText style={styles.headerTitle}>DOIT</AppText>
-            ),
-            headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('AddTask')} style={styles.headerButton}>
-                    <Ionicons name="add" size={24} color={colors.accentPrimary} />
-                </TouchableOpacity>
-            ),
-            headerStyle: { backgroundColor: colors.bgSecondary },
-            headerShadowVisible: false,
-        });
-    }, [navigation]);
 
     const SortOption = ({ label, value }: { label: string, value: 'smart' | 'deadline' | 'priority' | 'added' }) => {
         const isActive = activeSortMode === value;
@@ -46,7 +32,18 @@ const HomeScreen = ({ navigation }: any) => {
     };
 
     return (
-        <ScreenWrapper withTopInset={false}>
+        <ScreenWrapper withTopInset={true} withBottomInset={false}>
+            <CustomHeader
+                title="DOIT"
+                rightComponent={
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('AddTask')}
+                        style={styles.headerButton}
+                    >
+                        <Ionicons name="add" size={24} color={colors.accentPrimary} />
+                    </TouchableOpacity>
+                }
+            />
             <View style={styles.filterContainer}>
                 <View style={{ flex: 1 }}>
                     <TaskFilterBar />
@@ -86,6 +83,8 @@ const styles = StyleSheet.create({
     },
     headerButton: {
         padding: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     filterContainer: {
         flexDirection: 'row',
@@ -96,7 +95,10 @@ const styles = StyleSheet.create({
         backgroundColor: colors.bgPrimary,
     },
     sortButton: {
-        padding: 12,
+        height: 42,
+        width: 42,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginLeft: 4,
         marginRight: 16,
         backgroundColor: colors.bgTertiary,

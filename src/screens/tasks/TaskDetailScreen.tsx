@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ScreenWrapper } from '../../components/layout/ScreenWrapper';
+import { CustomHeader } from '../../components/layout/CustomHeader';
 import { AppText } from '../../components/common/AppText';
 import { AppButton } from '../../components/common/AppButton';
 import { AppBadge } from '../../components/common/AppBadge';
@@ -12,6 +13,7 @@ import { useTaskStore } from '../../store/task.store';
 import { tasksApi } from '../../services/api/tasks.api';
 import { useUIStore } from '../../store/ui.store';
 import { dateHelpers } from '../../utils/dateHelpers';
+import { notificationService } from '../../services/notification.service';
 
 const TaskDetailScreen = ({ route, navigation }: any) => {
     const { taskId } = route.params;
@@ -48,7 +50,12 @@ const TaskDetailScreen = ({ route, navigation }: any) => {
 
     const handleToggleStatus = async () => {
         try {
-            await tasksApi.toggleComplete(task._id);
+            const updatedTask = await tasksApi.toggleComplete(task._id);
+            if (updatedTask.status === 'completed') {
+                await notificationService.cancelTaskReminder(task._id);
+            } else {
+                await notificationService.scheduleTaskReminder(updatedTask._id, updatedTask.title, updatedTask.deadline);
+            }
             await fetchTasks();
             showToast(isCompleted ? 'Marked pending' : 'Marked completed', 'success');
         } catch (error) {
@@ -68,6 +75,7 @@ const TaskDetailScreen = ({ route, navigation }: any) => {
                     onPress: async () => {
                         try {
                             await tasksApi.deleteTask(task._id);
+                            await notificationService.cancelTaskReminder(task._id);
                             await fetchTasks();
                             showToast('Task deleted', 'info');
                             navigation.goBack();
@@ -82,6 +90,7 @@ const TaskDetailScreen = ({ route, navigation }: any) => {
 
     return (
         <ScreenWrapper>
+            <CustomHeader title="Task Details" showBackButton />
             <ScrollView contentContainerStyle={styles.container}>
                 <AppText variant="heading2" style={[styles.title, isCompleted && styles.completedText]}>
                     {task.title}

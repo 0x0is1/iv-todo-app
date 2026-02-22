@@ -23,7 +23,6 @@ export const useUIStore = create<UIState>((set) => ({
 
     showToast: (message, type) => {
         set({ toastMessage: message, toastType: type, toastVisible: true });
-        // auto-hide is handled by the Toast component or here if preferred via setTimeout
     },
 
     hideToast: () => set({ toastVisible: false }),

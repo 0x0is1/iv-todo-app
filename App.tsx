@@ -9,6 +9,7 @@ import { TamaguiProvider } from '@tamagui/core';
 
 import { tamaguiConfig } from './src/theme/tamagui.config';
 import { RootNavigator } from './src/navigation/RootNavigator';
+import { notificationService } from './src/services/notification.service';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -24,9 +25,9 @@ export default function App() {
   useEffect(() => {
     if (fontsLoaded) {
       // Hide splash after fonts load
-      // Real splash animation will happen in Auth navigator if needed,
-      // but the spec wants a textual splash. For now we just hide native.
       SplashScreen.hideAsync();
+      // Setup notifications
+      notificationService.setup();
     }
   }, [fontsLoaded]);
 
