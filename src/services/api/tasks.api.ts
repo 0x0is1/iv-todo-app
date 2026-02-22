@@ -23,7 +23,7 @@ export const tasksApi = {
     },
 
     toggleComplete: async (taskId: string): Promise<Task> => {
-        const response = await api.patch(`/tasks/${taskId}/complete`);
+        const response = await api.patch(`/tasks/${taskId}/toggle`);
         return response.data;
     }
 };
